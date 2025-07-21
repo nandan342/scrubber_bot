@@ -1,0 +1,217 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Define materials -->
+  <material name="white">
+    <color rgba="1 1 1 1" />
+  </material>
+
+  <material name="orange">
+    <color rgba="1 0.3 0.1 1" />  
+  </material>
+
+  <material name="blue">
+    <color rgba="0.2 0.2 1 1" />  
+  </material>
+
+  <material name="black">
+    <color rgba="0 0 0 1" />  
+  </material>
+
+  <!-- Base link -->
+  <link name="base_link" >
+
+  </link>
+
+  <!-- Fixed joint connecting base_link to chassis -->
+  <joint name="chassis_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="chassis" />
+    <origin xyz="-0.1 0 0" />
+  </joint>
+
+  <!-- Chassis link -->
+  <link name="chassis">
+    <visual>
+      <origin xyz="0.3 0 0.1" />
+      <geometry>
+        <box size="0.6 0.4 0.2" />
+      </geometry>
+      <material name="white" />
+    </visual>
+    <collision>
+      <origin xyz="0.3 0 0.1" />
+      <geometry>
+        <box size="0.6 0.4 0.2" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Left wheel joint and link -->
+  <joint name="left_wheel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="left_wheel" />
+    <origin xyz="0.20 0.225 0" rpy="-${pi/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <link name="left_wheel">
+    <visual>
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Right wheel joint and link -->
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="base_link" />
+    <child link="right_wheel" />
+    <origin xyz="0.20 -0.225 0" rpy="${pi/2} 0 0" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <link name="right_wheel">
+    <visual>
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+      <material name="blue" />
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.1" length="0.05" />
+      </geometry>
+    </collision>
+  </link>
+ <!--Caster wheel joints and links-->
+  <joint name="caster_wheel_1_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="caster_wheel_1"/>
+    <origin xyz="0.1 0.11 0"/>
+  </joint>
+
+  <link name="caster_wheel_1">
+    <visual>
+      <geometry>
+        <sphere radius="0.09"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.09"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="caster_wheel_2_joint" type="fixed">
+    <parent link="chassis"/>
+    <child link="caster_wheel_2"/>
+    <origin xyz="0.1 -0.11 0" />
+  </joint>
+
+  <link name="caster_wheel_2">
+    <visual>
+      <geometry>
+        <sphere radius="0.09"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.09"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="base_caster_wheel_3_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_wheel_3"/>
+    <origin xyz="0.4 0.11 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="caster_wheel_3">
+    <visual>
+      <geometry>
+        <sphere radius="0.09"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.09"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="base_caster_wheel_4_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_wheel_4"/>
+    <origin xyz="0.4 -0.11 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="caster_wheel_4">
+    <visual>
+      <geometry>
+        <sphere radius="0.09"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.09"/>
+      </geometry>
+    </collision>
+  </link>
+ <!--LiDAR Tower joint and  Link-->
+  <joint name="base_LiDAR_Tower_joint" type="fixed">
+    <parent link="chassis" />
+    <child link="LiDAR_Tower" />
+    <origin xyz="0.2 0.0 0.275" rpy="0 0 0" />
+  </joint>
+
+  <link name="LiDAR_Tower">
+    <visual>
+      <geometry>
+        <box size="0.085 0.085 0.15"/> 
+      </geometry>
+      <material name="orange"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.085 0.085 0.15"/> 
+      </geometry>
+    </collision>
+  </link>
+
+<!-- LiDAR joint and Link-->
+  <joint name="LiDAR_Tower_to_LiDAR_joint" type="fixed">
+    <parent link="LiDAR_Tower"/>
+    <child link="LiDAR"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="LiDAR">
+    <visual>
+      <geometry>
+        <cylinder radius="0.05" length="0.02"/>
+      </geometry>
+      <origin xyz="0 0 0.085" rpy="0 0 0"/>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.05" length="0.02"/>
+      </geometry>
+      <origin xyz="0 0 0.085" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+</robot>
